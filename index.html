@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador de PDFs com Object</title>
+    <title>Visualizador de PDFs com Iframe</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -54,11 +54,11 @@
         .pdf-viewer {
             float: left;
             width: 80%;
-            max-width: 1000px;
+            max-width: 700px; /* Define a largura máxima do iframe */
             height: 100vh;
             overflow: hidden;
         }
-        object {
+        iframe {
             width: 100%;
             height: 100%;
             border: 0;
@@ -98,9 +98,7 @@
     </div>
 
     <div class="pdf-viewer">
-        <object id="pdfViewer" data="" type="application/pdf">
-            <p>Seu navegador não suporta a visualização de PDFs. <a href="">Baixe o PDF aqui</a>.</p>
-        </object>
+        <iframe id="pdfViewer" src=""></iframe>
     </div>
 </div>
 
@@ -110,7 +108,7 @@
         for (var i = 0; i < pdfItems.length; i++) {
             pdfItems[i].onclick = function() {
                 var pdfPath = this.getAttribute('data-pdf-path');
-                document.getElementById('pdfViewer').data = pdfPath;
+                document.getElementById('pdfViewer').src = pdfPath;
             };
         }
     }
