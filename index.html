@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador de PDFs Compatível com Chrome 49.0</title>
+    <title>Visualizador de PDFs com Object</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,7 +19,7 @@
         }
         .pdf-list {
             float: left;
-            width: 20%; /* Largura fixa da lista de PDFs */
+            width: 20%;
             border-right: 1px solid #ccc;
             padding: 10px;
             height: 100vh;
@@ -39,35 +39,29 @@
             background-color: #fff;
             overflow: hidden;
         }
+        /* Reduz o tamanho das miniaturas em 30% */
         .pdf-list img {
-            width: 50px;
-            height: 50px;
+            width: 35px;
+            height: 35px;
             float: left;
             margin-right: 10px;
         }
         .pdf-list li span {
-            font-size: 12px; /* Fonte ajustada para um tamanho menor */
+            font-size: 12px;
             color: #333;
-            line-height: 50px;
+            line-height: 35px;
         }
         .pdf-viewer {
             float: left;
-            width: 80%; /* Usa uma largura fixa para a área do PDF */
-            max-width: 1000px; /* Limita a largura do visualizador a 1000px */
-            padding: 0;
+            width: 80%;
+            max-width: 1000px;
             height: 100vh;
             overflow: hidden;
         }
-        iframe {
+        object {
             width: 100%;
             height: 100%;
             border: 0;
-        }
-        /* Correção para navegadores mais antigos */
-        @media screen and (max-width: 1200px) {
-            .pdf-viewer {
-                width: 100%;
-            }
         }
     </style>
 </head>
@@ -94,7 +88,7 @@
             </li>
             <li data-pdf-path="pdfs/protoc_FORM_SEPSE.pdf">
                 <img src="thumbnails/pdf_128x128_1.png" alt="PDF 5 Thumbnail">
-                <span>Form. Protocolo SEPSE Adulto</span>
+                <span>Formulário Protocolo SEPSE Adulto</span>
             </li>
             <li data-pdf-path="pdfs/protoc_NEWS.pdf">
                 <img src="thumbnails/pdf_128x128_1.png" alt="PDF 6 Thumbnail">
@@ -104,27 +98,27 @@
     </div>
 
     <div class="pdf-viewer">
-        <iframe id="pdfViewer" src="" frameborder="0"></iframe>
+        <object id="pdfViewer" data="" type="application/pdf">
+            <p>Seu navegador não suporta a visualização de PDFs. <a href="">Baixe o PDF aqui</a>.</p>
+        </object>
     </div>
 </div>
 
 <script type="text/javascript">
-    // Adiciona evento de clique para cada item da lista
     function addClickEventToItems() {
         var pdfItems = document.getElementById('pdf-files').getElementsByTagName('li');
         for (var i = 0; i < pdfItems.length; i++) {
             pdfItems[i].onclick = function() {
                 var pdfPath = this.getAttribute('data-pdf-path');
-                document.getElementById('pdfViewer').src = pdfPath;
+                document.getElementById('pdfViewer').data = pdfPath;
             };
         }
     }
 
-    // Função para adicionar o evento de carregamento compatível
     if (window.attachEvent) {
-        window.attachEvent('onload', addClickEventToItems);  // Para versões antigas de navegadores (IE8, Chrome 49)
+        window.attachEvent('onload', addClickEventToItems);
     } else {
-        window.addEventListener('load', addClickEventToItems, false); // Navegadores modernos
+        window.addEventListener('load', addClickEventToItems, false);
     }
 </script>
 
