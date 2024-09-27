@@ -1,123 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protocolos MED/HSF</title>
+    <title>Visualizador de PDFs Compatível</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            background-color: #f0f0f0;
         }
         .container {
-            display: flex;
+            display: block;
+            overflow: hidden;
             width: 100%;
+            height: 100vh;
         }
         .pdf-list {
-            width: 20%;
-            padding: 20px;
-            box-sizing: border-box;
-            background-color: #f0f0f0;
+            float: left;
+            width: 20%; /* Mantém a largura da lista */
+            border-right: 1px solid #ccc;
+            padding: 10px;
             height: 100vh;
-            overflow-y: auto;
+            overflow-y: scroll;
+            background-color: #f9f9f9;
+        }
+        .pdf-list ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .pdf-list li {
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 5px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            overflow: hidden;
+        }
+        .pdf-list img {
+            width: 50px;
+            height: 50px;
+            float: left;
+            margin-right: 10px;
+        }
+        .pdf-list li span {
+            font-size: 12px; /* Fonte dos links ajustada para um tamanho menor */
+            color: #333;
+            line-height: 50px;
         }
         .pdf-viewer {
-            width: 70%;
-            padding: 20px;
-            box-sizing: border-box;
-            transition: opacity 0.5s ease-in-out;
-            opacity: 1;
+            float: left;
+            width: calc(100% - 20%); /* Garante que o visualizador use 80% da largura disponível */
+            max-width: 1000px; /* Define o limite de 1000px para a largura */
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
         }
         iframe {
             width: 100%;
-            height: 800px; /* Aumentando o tamanho do iframe */
-            border: none;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin: 10px 0;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-        img {
-            width: 40px;  /* Diminuindo o tamanho da miniatura */
-            height: 60px;
-            object-fit: cover;
-            margin-right: 10px;
-            border: 1px solid #ddd;
-        }
-        li span {
-            font-size: 12px; /* Diminuindo o tamanho do texto */
-        }
-        li:hover {
-            text-decoration: underline;
-            color: blue;
+            height: 100%;
+            border: 0;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="pdf-list">
-            <ul id="pdf-files">
-                <li data-pdf-path="pdfs/protoc_CLASS_RISCO.pdf" data-thumbnail="thumbnails/pdf_128x128_1.png">
-                    <img src="thumbnails/pdf_128x128_1.png" alt="PDF 1 Thumbnail"><span>Classificação de Risco PS</span>
-                </li>
-                <li data-pdf-path="pdfs/protoc_DOR_TOR.pdf" data-thumbnail="thumbnails/pdf_128x128_1.png">
-                    <img src="thumbnails/pdf_128x128_1.png" alt="PDF 2 Thumbnail"><span>Protocolo Dor Torácica</span>
-                </li>
-                <li data-pdf-path="pdfs/protoc_FLUXO_DOR_TOR.pdf" data-thumbnail="thumbnails/pdf_128x128_1.png">
-                    <img src="thumbnails/pdf_128x128_1.png" alt="PDF 3 Thumbnail"><span>Fluxograma Dor Torácica</span>
-                </li>		
-				<li data-pdf-path="pdfs/protoc_SEPSE.pdf" data-thumbnail="thumbnails/pdf_128x128_1.png">
-                    <img src="thumbnails/pdf_128x128_1.png" alt="PDF 1 Thumbnail"><span>Protocolo SEPSE</span>
-                </li>
-                <li data-pdf-path="pdfs/protoc_FORM_SEPSE.pdf" data-thumbnail="thumbnails/pdf_128x128_1.png">
-                    <img src="thumbnails/pdf_128x128_1.png" alt="PDF 2 Thumbnail"><span>Formulário Protocolo SEPSE Adulto</span>
-                </li>
-                <li data-pdf-path="pdfs/protoc_NEWS.pdf" data-thumbnail="thumbnails/pdf_128x128_1.png">
-                    <img src="thumbnails/pdf_128x128_1.png" alt="PDF 3 Thumbnail"><span>Protocolo de NEWS</span>
-                </li>
-                <!-- Adicione mais itens conforme necessário -->
-            </ul>
-        </div>
-
-        <div class="pdf-viewer" id="viewer-container">
-            <iframe id="pdfViewer" src="" frameborder="1"></iframe>
-        </div>
+<div class="container">
+    <div class="pdf-list">
+        <ul id="pdf-files">
+            <li data-pdf-path="pdfs/protoc_CLASS_RISCO.pdf">
+                <img src="thumbnails/pdf_128x128_1.png" alt="PDF 1 Thumbnail">
+                <span>Classificação de Risco PS</span>
+            </li>
+            <li data-pdf-path="pdfs/protoc_DOR_TOR.pdf">
+                <img src="thumbnails/pdf_128x128_1.png" alt="PDF 2 Thumbnail">
+                <span>Protocolo Dor Torácica</span>
+            </li>
+            <li data-pdf-path="pdfs/protoc_FLUXO_DOR_TOR.pdf">
+                <img src="thumbnails/pdf_128x128_1.png" alt="PDF 3 Thumbnail">
+                <span>Fluxograma Dor Torácica</span>
+            </li>
+            <li data-pdf-path="pdfs/protoc_SEPSE.pdf">
+                <img src="thumbnails/pdf_128x128_1.png" alt="PDF 4 Thumbnail">
+                <span>Protocolo SEPSE</span>
+            </li>
+            <li data-pdf-path="pdfs/protoc_FORM_SEPSE.pdf">
+                <img src="thumbnails/pdf_128x128_1.png" alt="PDF 5 Thumbnail">
+                <span>Form. Protocolo SEPSE Adulto</span>
+            </li>
+            <li data-pdf-path="pdfs/protoc_NEWS.pdf">
+                <img src="thumbnails/pdf_128x128_1.png" alt="PDF 6 Thumbnail">
+                <span>Protocolo de NEWS</span>
+            </li>
+        </ul>
     </div>
 
-    <script>
-        // Obtendo a lista de PDFs e o contêiner do visualizador
-        const pdfItems = document.querySelectorAll('#pdf-files li');
-        const pdfViewer = document.getElementById('pdfViewer');
-        const viewerContainer = document.getElementById('viewer-container');
+    <div class="pdf-viewer">
+        <iframe id="pdfViewer" src="" frameborder="0"></iframe>
+    </div>
+</div>
 
-        // Função para carregar o PDF selecionado no visualizador com efeito de fade
-        function loadPDF(event) {
-            const pdfPath = event.currentTarget.getAttribute('data-pdf-path');
-            
-            // Efeito de fade-out
-            viewerContainer.style.opacity = 0;
-
-            // Espera a conclusão do fade-out e carrega o PDF, depois faz fade-in
-            setTimeout(() => {
-                pdfViewer.src = pdfPath;
-                viewerContainer.style.opacity = 1; // Efeito de fade-in
-            }, 500); // Duração de 500ms para o fade-out
+<script type="text/javascript">
+    function addClickEventToItems() {
+        var pdfItems = document.getElementById('pdf-files').getElementsByTagName('li');
+        for (var i = 0; i < pdfItems.length; i++) {
+            pdfItems[i].onclick = function() {
+                var pdfPath = this.getAttribute('data-pdf-path');
+                document.getElementById('pdfViewer').src = pdfPath;
+            };
         }
+    }
 
-        // Anexando ouvintes de evento de clique aos itens da lista de PDFs
-        pdfItems.forEach(item => {
-            item.addEventListener('click', loadPDF);
-        });
-    </script>
+    if (window.attachEvent) {
+        window.attachEvent('onload', addClickEventToItems);  // Para navegadores antigos como IE8
+    } else {
+        window.addEventListener('load', addClickEventToItems, false); // Para navegadores modernos
+    }
+</script>
 
 </body>
 </html>
